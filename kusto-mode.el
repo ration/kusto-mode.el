@@ -25,7 +25,7 @@
 (setq kusto-font-lock-keywords
       (let* (
             ;; define several category of keywords
-            (x-keywords '("summarize" "where" "project" "order by" "let" "as"))
+            (x-keywords '("summarize" "where" "project" "order by" "let" "as" "inner" "outer" "on" "as" "union" "join"))
             (x-types '(""))
             (x-constants '(""))
             (x-events '(""))

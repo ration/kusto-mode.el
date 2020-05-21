@@ -24,19 +24,19 @@
 ;; each category of keyword is given a particular face
 (setq kusto-font-lock-keywords
       (let* (
-            ;; define several category of keywords
-            (x-keywords '("summarize" "where" "project" "order by" "let" "as" "inner" "outer" "on" "as" "union" "join"))
-            (x-types '(""))
-            (x-constants '(""))
-            (x-events '(""))
-            (x-functions '("count" "datetime" "toint" "tolong" "tostring" "any" "anyif" "arg_max" "arg_min" "avg" "avgif" "buildschema" "count" "countif" "dcount" "dcountif" "hll" "hll_merge" "make_bag" "make_list" "make_set" "max" "maxif" "min" "minif" "percentiles" "stdev" "stdevif" "stdevp" "sum" "sumif" "tdigest" "tdigest_merge" "variance" "varianceif" "variancep"))
+             ;; define several category of keywords
+             (x-keywords '("summarize" "filter" "where" "project" "order by" "let" "as" "inner" "outer" "on" "as" "union" "join" "and" "or"))
+             (x-types '(""))
+             (x-constants '(""))
+             (x-events '(""))
+             (x-functions '("count" "datetime" "toint" "tolong" "tostring" "any" "anyif" "arg_max" "arg_min" "avg" "avgif" "buildschema" "count" "countif" "dcount" "dcountif" "hll" "hll_merge" "make_bag" "make_list" "make_set" "max" "maxif" "min" "minif" "percentiles" "stdev" "stdevif" "stdevp" "sum" "sumif" "tdigest" "tdigest_merge" "variance" "varianceif" "variancep" "ago"))
 
-            ;; generate regex string for each category of keywords
-            (x-keywords-regexp (regexp-opt x-keywords 'words))
-            (x-types-regexp (regexp-opt x-types 'words))
-            (x-constants-regexp (regexp-opt x-constants 'words))
-            (x-events-regexp (regexp-opt x-events 'words))
-            (x-functions-regexp (regexp-opt x-functions 'words)))
+             ;; generate regex string for each category of keywords
+             (x-keywords-regexp (regexp-opt x-keywords 'words))
+             (x-types-regexp (regexp-opt x-types 'words))
+             (x-constants-regexp (regexp-opt x-constants 'words))
+             (x-events-regexp (regexp-opt x-events 'words))
+             (x-functions-regexp (regexp-opt x-functions 'words)))
 
         `(
           (,x-types-regexp . font-lock-type-face)

@@ -140,7 +140,7 @@
           (, x-datatypes-regexp . font-lock-builtin-face)
           (, x-keywords-regexp . font-lock-keyword-face)
           (, "\\<\\([[:digit:]]+\\)\\>" . font-lock-constant-face)
-          (, "==\\|!=\\|=~\\|!~\\|<\\|>\\|<>" . font-lock-keyword-face)
+          (, "==\\|!=\\|=~\\|!~\\|<\\|>\\|<>\\|<=\\|>=" . font-lock-keyword-face)
           (, "!\\|~" . font-lock-negation-char-face)
           ;; note: order above matters, because once colored, that part won't change.
           ;; in general, put longer words first

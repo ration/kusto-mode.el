@@ -36,9 +36,14 @@
          (x-scalar-operators
           '("has" "has_cs" "hasprefix" "hasprefix_cs" "hassuffix" "hassuffix_cs"
             "contains" "contains_cs" "startswith" "startswith_cs" "endswith"
-            "endswith_cs" "matches regex" "in" "in~" "has_any")))
+            "endswith_cs" "matches regex" "in" "in~" "has_any"))
+         (x-logical-operators
+          '("and" "or" "between")))
     (append x-tabular-operators
-            x-scalar-operators)))
+            x-scalar-operators
+            x-logical-operators)))
+
+(regexp-opt '("==" "!=" "=~" "!~" "<" ">" "<>" "and" "or" "between") 'symbols)
 
 (defconst kusto-builtin-functions
   (let* ((x-binary-functions
@@ -79,33 +84,33 @@
           '("case" "coalesce" "iif" "iff" "max_of" "min_of"))
          (x-series-functions
           '("series_add" "series_divide" "series_equals" "series_greater"
-          "series_greater_equals" "series_less" "series_less_equals"
-          "series_multiply" "series_not_equals" "series_subtract"
-          "series_decompose" "series_decompose_anomalies"
-          "series_decompose_forecast" "series_fill_backward" "series_fill_const"
-          "series_fill_forward" "series_fill_linear" "series_fir"
-          "series_fit_2lines" "series_fit_2lines_dynamic" "series_fit_line"
-          "series_fit_line_dynamic" "series_iir" "series_outliers"
-          "series_pearson_correlation" "series_periods_detect"
-          "series_periods_validate" "series_seasonal" "series_stats"
-          "series_stats_dynamic"))
+            "series_greater_equals" "series_less" "series_less_equals"
+            "series_multiply" "series_not_equals" "series_subtract"
+            "series_decompose" "series_decompose_anomalies"
+            "series_decompose_forecast" "series_fill_backward" "series_fill_const"
+            "series_fill_forward" "series_fill_linear" "series_fir"
+            "series_fit_2lines" "series_fit_2lines_dynamic" "series_fit_line"
+            "series_fit_line_dynamic" "series_iir" "series_outliers"
+            "series_pearson_correlation" "series_periods_detect"
+            "series_periods_validate" "series_seasonal" "series_stats"
+            "series_stats_dynamic"))
          (x-string-functions
           '("base64_encode_tostring" "base64_decode_tostring"
-          "base64_decode_toarray" "countof" "extract" "extract_all"
-          "extractjson" "indexof" "isempty" "isnotempty" "isnotnull" "isnull"
-          "parse_csv" "parse_ipv4" "parse_json" "parse_url" "parse_urlquery"
-          "parse_version" "replace" "reverse" "split" "strcat" "strcat_delim"
-          "strcmp" "strlen" "strrep" "substring" "toupper" "translate" "trim"
-          "trim_end" "trim_start" "url_decode" "url_encode"))
+            "base64_decode_toarray" "countof" "extract" "extract_all"
+            "extractjson" "indexof" "isempty" "isnotempty" "isnotnull" "isnull"
+            "parse_csv" "parse_ipv4" "parse_json" "parse_url" "parse_urlquery"
+            "parse_version" "replace" "reverse" "split" "strcat" "strcat_delim"
+            "strcmp" "strlen" "strrep" "substring" "toupper" "translate" "trim"
+            "trim_end" "trim_start" "url_decode" "url_encode"))
          (x-ipv4-functions
           '("ipv4_compare" "ipv4_is_match" "parse_ipv4" "parse_ipv4_mask"))
          (x-type-functions '("gettype"))
          (x-aggregation-functions
           '("dcount_hll" "hll_merge" "percentile_tdigest" "percentrank_tdigest"
-          "rank_tdigest" "tdigest_merge"))
+            "rank_tdigest" "tdigest_merge"))
          (x-geospatial-functions
           '("geo_distance_2points" "geo_geohash_to_central_point"
-          "geo_point_in_circle" "geo_point_to_geohash")))
+            "geo_point_in_circle" "geo_point_to_geohash")))
     (append x-binary-functions
             x-conversion-functions
             x-time-functions
@@ -126,20 +131,16 @@
 ;; create the list for font-lock.
 ;; each category of keyword is given a particular face
 (setq kusto-font-lock-keywords
-      (let* ((x-keywords kusto-operators)
-             (x-builtins kusto-builtin-functions)
-             (x-datatypes kusto-data-types)
-
-             (x-keywords-regexp (regexp-opt x-keywords 'symbols))
-             (x-builtins-regexp (regexp-opt x-builtins 'symbols))
-             (x-datatypes-regexp (regexp-opt x-datatypes 'symbols)))
+      (let* ((x-keywords-regexp (regexp-opt kusto-operators 'symbols))
+             (x-builtins-regexp (regexp-opt kusto-builtin-functions 'symbols))
+             (x-datatypes-regexp (regexp-opt kusto-data-types 'symbols)))
 
         `((, "'[^']*'\\|\"[^\"]*\"" . font-lock-string-face)
           (, x-builtins-regexp . font-lock-builtin-face)
           (, x-datatypes-regexp . font-lock-builtin-face)
           (, x-keywords-regexp . font-lock-keyword-face)
           (, "\\<\\([[:digit:]]+\\)\\>" . font-lock-constant-face)
-          (, "==\\|!=\\|=~\\|!~" . font-lock-keyword-face)
+          (, "==\\|!=\\|=~\\|!~\\|<\\|>\\|<>" . font-lock-keyword-face)
           (, "!\\|~" . font-lock-negation-char-face)
           ;; note: order above matters, because once colored, that part won't change.
           ;; in general, put longer words first
